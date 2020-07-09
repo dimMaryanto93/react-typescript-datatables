@@ -19,14 +19,14 @@
     "datatables.net-buttons": "^1.6.2",
     "datatables.net-buttons-dt": "^1.6.2",
     "datatables.net-dt": "^1.10.21",
-    "datatables.net-responsive": "^2.2.3",
+    "datatables.net-responsive": "^2.2.5",
     "datatables.net-responsive-dt": "^2.2.5",
+    "datatables.responsive.typings": "^1.0.3",
     "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.1.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "typescript": "^3.7.5"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,6 +51,10 @@
   },
   "devDependencies": {
     "@types/datatables.net": "^1.10.19",
-    "@types/jquery": "^3.5.0"
+    "@types/datatables.net-select": "^1.2.6",
+    "@types/jquery": "^3.5.0",
+    "source-map-loader": "^1.0.1",
+    "ts-loader": "^8.0.0",
+    "typescript": "^3.9.6"
   }
 }
