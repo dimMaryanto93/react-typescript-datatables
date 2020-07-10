@@ -93,6 +93,7 @@ class Body extends Component {
     }
 
     ajaxConfig: FunctionAjax = (data, callback, settings) => {
+        console.log('fetch data from server');
         callback({
             recordsTotal: 0,
             recordsFiltered: 0,
@@ -114,7 +115,7 @@ class Body extends Component {
                 <DataTablesComponent
                     id="example-table"
                     columns={this.columns}
-                    isServerSide={false}
+                    isServerSide={true}
                     ajaxData={this.ajaxConfig}
                     data={this.data}
                     rowCallback={this.rowCallback}/>

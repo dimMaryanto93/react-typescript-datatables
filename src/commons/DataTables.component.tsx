@@ -19,7 +19,6 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
     private datatable: any;
 
     componentDidMount() {
-        let that = this;
         this.datatable = $(`#${this.props.id}`).DataTable({
             language: {
                 lengthMenu: "Menampilkan _MENU_ data per halaman",
@@ -44,25 +43,21 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
         });
 
         this.datatable.on('order.dt', function () {
-            that.reloadData(that);
         });
 
         this.datatable.on('page.dt', function () {
-            that.reloadData(that);
         });
 
         this.datatable.on('length.dt', function (e: any, settings: any, len: number) {
-            that.reloadData(that);
         });
     }
 
-    reloadData = (that: any) => {
-        console.log('server side enabled: ', that.props.isServerSide)
-        if (that.props.isServerSide) {
-            that.datatable.ajax.reload();
+    reloadData = () => {
+        console.log('server side enabled: ', this.props.isServerSide)
+        if (this.props.isServerSide) {
+            this.datatable.ajax.reload();
         }
     }
-
 
     componentWillUnmount() {
         this.datatable.destroy();
