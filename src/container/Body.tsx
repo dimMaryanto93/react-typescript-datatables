@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import 'font-awesome/css/font-awesome.min.css'
-import {FunctionRowCallback} from "../commons/DataTables.types";
-import {AjaxSettings, ColumnSetting} from "../commons/DataTables.interfaces";
+import {FunctionAjax, FunctionRowCallback} from "../commons/DataTables.types";
+import {ColumnSetting} from "../commons/DataTables.interfaces";
 import DataTablesComponent from "../commons/DataTables.component";
 
 interface ExampleData {
@@ -95,33 +95,21 @@ class Body extends Component {
         });
     }
 
-    ajaxConfig: AjaxSettings = {
-
+    ajaxConfig: FunctionAjax = (data, callback, settings) => {
+        console.log('params: ', settings);
+        callback({
+            recordsTotal: 0,
+            recordsFiltered: 0,
+            data: []
+        });
     }
-
-    data = [
-        {
-            id: "001",
-            name: "Dimas Maryanto",
-            kota: "Kab. Bandung",
-            provinsi: "Jawa Barat",
-            alamat: "Jl. Bukit indah no B8"
-        },
-        {
-            id: "002",
-            name: "Muhamad Yusuf",
-            kota: "Kab. Bandung",
-            provinsi: "Jawa Barat",
-            alamat: "Jl. Cijambe"
-        }
-    ]
 
     render() {
         return (
             <div>
                 <DataTablesComponent columns={this.columns}
                                      isServerSide={false}
-                                     data={this.data}
+                                     ajaxData={this.ajaxConfig}
                                      rowCallback={this.rowCallback}/>
             </div>
         );
