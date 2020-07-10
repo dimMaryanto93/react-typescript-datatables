@@ -22,6 +22,7 @@
     "datatables.net-responsive": "^2.2.5",
     "datatables.net-responsive-dt": "^2.2.5",
     "datatables.responsive.typings": "^1.0.3",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.1.1",

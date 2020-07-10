@@ -1,13 +1,20 @@
 import React, {Component} from 'react';
-import {ColumnSetting, DataTables} from '../commons/DataTables';
+import 'font-awesome/css/font-awesome.min.css'
+import {FunctionRowCallback} from "../commons/DataTables.types";
+import {AjaxSettings, ColumnSetting} from "../commons/DataTables.interfaces";
+import DataTablesComponent from "../commons/DataTables.component";
+
+interface ExampleData {
+    id: string,
+    name: string,
+    kota: string,
+    provinsi: string,
+    alamat: string
+}
 
 class Body extends Component {
 
-    handleOnClick = (id: number) => {
-        console.log('button click', id);
-    }
-
-    columns: ColumnSetting[] = [
+    columns: ColumnSetting<ExampleData>[] = [
         {
             className: "text-center",
             searchable: false,
@@ -16,7 +23,7 @@ class Body extends Component {
             title: "No",
             data: null,
             render: (data, type, row, meta) => {
-                return data.name;
+                return data.id;
             }
         },
         {
@@ -53,13 +60,44 @@ class Body extends Component {
             title: "Action",
             data: null,
             render: (data, type, row, meta) => {
-                return `<button class="btn btn-warning" type="button" id="${data.id}">
-                        <i class=""></i>
-                        Edit
-                        </button>`;
+                return `<div id="columnAction" class="btn-group dt-column-action" role="group" aria-label="column-action">
+                            <button class="btn btn-info" type="button" id="detail">
+                                <i class="fa fa-binoculars"></i>
+                            </button>  
+                            <button class="btn btn-warning" type="button" id="edit">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button class="btn btn-danger" type="button" id="remove">
+                                <i class="fa fa-trash"></i>
+                            </button>     
+                        </div>`;
             }
         }
     ]
+
+    rowCallback: FunctionRowCallback<ExampleData> = (row, data: ExampleData, index) => {
+        let rootNode = row.lastChild;
+        let buttons = rootNode?.firstChild?.childNodes;
+
+        let detailButton = buttons?.item(1);
+        detailButton?.addEventListener('click', () => {
+            console.log('detail button', data.id);
+        });
+
+        let editButton = buttons?.item(3);
+        editButton?.addEventListener('click', () => {
+            console.log('edit button', data.id);
+        });
+
+        let removeButton = buttons?.item(5);
+        removeButton?.addEventListener('click', () => {
+            console.log('remove button', data.id);
+        });
+    }
+
+    ajaxConfig: AjaxSettings = {
+
+    }
 
     data = [
         {
@@ -68,16 +106,23 @@ class Body extends Component {
             kota: "Kab. Bandung",
             provinsi: "Jawa Barat",
             alamat: "Jl. Bukit indah no B8"
+        },
+        {
+            id: "002",
+            name: "Muhamad Yusuf",
+            kota: "Kab. Bandung",
+            provinsi: "Jawa Barat",
+            alamat: "Jl. Cijambe"
         }
     ]
-
-    componentDidMount() {
-    }
 
     render() {
         return (
             <div>
-                <DataTables columns={this.columns} isServerSide={false} data={this.data}/>
+                <DataTablesComponent columns={this.columns}
+                                     isServerSide={false}
+                                     data={this.data}
+                                     rowCallback={this.rowCallback}/>
             </div>
         );
     }
