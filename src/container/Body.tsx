@@ -76,27 +76,23 @@ class Body extends Component {
     ]
 
     rowCallback: FunctionRowCallback<ExampleData> = (row, data: ExampleData, index) => {
-        let rootNode = row.lastChild;
-        let buttons = rootNode?.firstChild?.childNodes;
-
-        let detailButton = buttons?.item(1);
-        detailButton?.addEventListener('click', () => {
+        let buttonDetail = document.getElementById('detail');
+        buttonDetail?.addEventListener('click', () => {
             console.log('detail button', data.id);
         });
 
-        let editButton = buttons?.item(3);
-        editButton?.addEventListener('click', () => {
-            console.log('edit button', data.id);
+        let buttonEdit = document.getElementById('edit');
+        buttonEdit?.addEventListener('click', () => {
+            console.log('detail edit', data.id);
         });
 
-        let removeButton = buttons?.item(5);
-        removeButton?.addEventListener('click', () => {
-            console.log('remove button', data.id);
+        let buttonRemove = document.getElementById('remove');
+        buttonRemove?.addEventListener('click', () => {
+            console.log('detail remove', data.id);
         });
     }
 
     ajaxConfig: FunctionAjax = (data, callback, settings) => {
-        console.log('params: ', settings);
         callback({
             recordsTotal: 0,
             recordsFiltered: 0,
@@ -104,13 +100,24 @@ class Body extends Component {
         });
     }
 
+    data: Array<ExampleData> = [{
+        id: "001",
+        alamat: "JL. Buki indah",
+        kota: "Kab.Bandung",
+        name: "Dimas Maryanto",
+        provinsi: "Jawa Barat"
+    }];
+
     render() {
         return (
             <div>
-                <DataTablesComponent columns={this.columns}
-                                     isServerSide={false}
-                                     ajaxData={this.ajaxConfig}
-                                     rowCallback={this.rowCallback}/>
+                <DataTablesComponent
+                    id="example-table"
+                    columns={this.columns}
+                    isServerSide={false}
+                    ajaxData={this.ajaxConfig}
+                    data={this.data}
+                    rowCallback={this.rowCallback}/>
             </div>
         );
     }

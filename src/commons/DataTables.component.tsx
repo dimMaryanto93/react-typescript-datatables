@@ -19,7 +19,8 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
     private datatable: any;
 
     componentDidMount() {
-        this.datatable = $('#datatable').DataTable({
+        let that = this;
+        this.datatable = $(`#${this.props.id}`).DataTable({
             language: {
                 lengthMenu: "Menampilkan _MENU_ data per halaman",
                 info: "Halaman _PAGE_ dari _PAGES_",
@@ -41,10 +42,33 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
             columns: this.props.columns,
             rowCallback: this.props.rowCallback
         });
+
+        this.datatable.on('order.dt', function () {
+            that.reloadData(that);
+        });
+
+        this.datatable.on('page.dt', function () {
+            that.reloadData(that);
+        });
+
+        this.datatable.on('length.dt', function (e: any, settings: any, len: number) {
+            that.reloadData(that);
+        });
     }
+
+    reloadData = (that: any) => {
+        console.log('server side enabled: ', that.props.isServerSide)
+        if (that.props.isServerSide) {
+            that.datatable.ajax.reload();
+        }
+    }
+
 
     componentWillUnmount() {
         this.datatable.destroy();
+        this.datatable.off('order.dt');
+        this.datatable.off('page.dt');
+        this.datatable.off('length.dt');
     }
 
     style = {
@@ -53,7 +77,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
 
     render() {
         return (
-            <Table id="datatable"
+            <Table id={this.props.id}
                    bordered
                    striped
                    hover
