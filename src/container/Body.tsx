@@ -76,27 +76,33 @@ class Body extends Component {
     ]
 
     rowCallback: FunctionRowCallback<ExampleData> = (row, data: ExampleData, index) => {
-        let buttonDetail = document.getElementById('detail');
+        let divButtonGroup = row.lastChild;
+        let buttonGroups = divButtonGroup?.firstChild?.childNodes;
+
+        console.log('button group', buttonGroups?.item(index));
+
+        // item(indexOfElement)
+        let buttonDetail = buttonGroups?.item(1);
         buttonDetail?.addEventListener('click', () => {
-            console.log('detail button', data.id);
+            console.log('button click', 'button detail', data);
         });
 
-        let buttonEdit = document.getElementById('edit');
+        let buttonEdit = buttonGroups?.item(3);
         buttonEdit?.addEventListener('click', () => {
-            console.log('detail edit', data.id);
+            console.log('button click', 'button edit', data);
         });
 
-        let buttonRemove = document.getElementById('remove');
+        let buttonRemove = buttonGroups?.item(5);
         buttonRemove?.addEventListener('click', () => {
-            console.log('detail remove', data.id);
+            console.log('button click', 'button remove', data);
         });
     }
 
-    ajaxConfig: FunctionAjax = (data, callback, settings) => {
-        console.log('fetch data from server');
+    ajaxConfig: FunctionAjax = (data, callback) => {
+        console.log('data: ', data);
         callback({
-            recordsTotal: 1,
-            recordsFiltered: 1,
+            recordsTotal: 10,
+            recordsFiltered: 10,
             data: [
                 {
                     id: "001",
@@ -104,7 +110,22 @@ class Body extends Component {
                     kota: "Kab.Bandung",
                     name: "Dimas Maryanto",
                     provinsi: "Jawa Barat"
-                }
+                },
+                {
+                    id: "002",
+                    alamat: "Jl. Cigruik",
+                    kota: "Kab.Bandung",
+                    name: "Muhamad Purwadi",
+                    provinsi: "Jawa Barat"
+                },
+                {
+                    id: "003",
+                    alamat: "JL. Ujung Berung",
+                    kota: "Kab.Bandung",
+                    name: "Muhamad Yusuf",
+                    provinsi: "Jawa Barat"
+                },
+
             ]
         });
     }
@@ -113,7 +134,8 @@ class Body extends Component {
         return (
             <div>
                 <DataTablesComponent
-                    id="example-table"
+                    key={"test01"}
+                    id={'datatables-01'}
                     columns={this.columns}
                     ajaxData={this.ajaxConfig}
                     rowCallback={this.rowCallback}/>

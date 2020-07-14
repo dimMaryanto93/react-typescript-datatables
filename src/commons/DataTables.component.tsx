@@ -39,7 +39,6 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
             pagingType: "full_numbers",
             ajax: this.props.ajaxData,
             jQueryUI: false,
-            columnDefs: [],
             processing: true,
             serverSide: true,
             info: true,
@@ -74,6 +73,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
                    hover
                    responsive
                    className="display"
+                   size={"sm"}
                    style={this.style}>
             </Table>
         );
