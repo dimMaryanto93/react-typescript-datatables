@@ -1,10 +1,10 @@
-import React from "react";
+import React, {RefObject} from "react";
 import $ from 'jquery';
 import 'datatables.net-dt/css/jquery.dataTables.css'
 import 'datatables.net-buttons-dt/css/buttons.dataTables.css';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
-import {Table} from "react-bootstrap";
 import {ColumnSettings} from "./DataTables.interfaces";
+import {Table} from "react-bootstrap";
 
 require('datatables.net'); // eslint-disable-line no-unused-vars
 require('datatables.net-buttons'); // eslint-disable-line no-unused-vars
@@ -17,6 +17,12 @@ require('datatables.net-buttons/js/buttons.print.min.js');  // Print view button
 class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
 
     private datatable: any;
+    private dataTablesRef: RefObject<any>;
+
+    constructor(props: ColumnSettings<T>) {
+        super(props);
+        this.dataTablesRef = React.createRef();
+    }
 
     componentDidMount() {
         this.datatable = $(`#${this.props.id}`).DataTable({
@@ -33,9 +39,9 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
             pagingType: "full_numbers",
             ajax: this.props.ajaxData,
             jQueryUI: false,
-            data: this.props.data,
+            columnDefs: [],
             processing: true,
-            serverSide: this.props.isServerSide,
+            serverSide: true,
             info: true,
             dom: '<"top"i>rt<"bottom"flp><"clear">',
             columns: this.props.columns,
@@ -53,17 +59,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
     }
 
     reloadData = () => {
-        console.log('server side enabled: ', this.props.isServerSide)
-        if (this.props.isServerSide) {
-            this.datatable.ajax.reload();
-        }
-    }
-
-    componentWillUnmount() {
-        this.datatable.destroy();
-        this.datatable.off('order.dt');
-        this.datatable.off('page.dt');
-        this.datatable.off('length.dt');
+        this.datatable.ajax.reload();
     }
 
     style = {

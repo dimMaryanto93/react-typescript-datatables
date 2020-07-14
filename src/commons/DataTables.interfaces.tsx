@@ -9,13 +9,8 @@ import {
 export interface ColumnSettings<T> {
     id: string;
     columns: Array<ColumnSetting<T>>;
-    data?: Array<T>;
-    isServerSide?: boolean;
-    rowCallback?: FunctionRowCallback<T>;
-    ajaxData?: string | AjaxSettings | FunctionAjax;
-    onEdit?: FunctionRowCallback<T>;
-    onDelete?: FunctionRowCallback<T>;
-    onDetail?: FunctionRowCallback<T>;
+    rowCallback: FunctionRowCallback<T>;
+    ajaxData: string | AjaxSettings | FunctionAjax;
 }
 
 export interface AjaxSettings extends JQueryAjaxSettings {

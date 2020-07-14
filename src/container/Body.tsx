@@ -95,19 +95,19 @@ class Body extends Component {
     ajaxConfig: FunctionAjax = (data, callback, settings) => {
         console.log('fetch data from server');
         callback({
-            recordsTotal: 0,
-            recordsFiltered: 0,
-            data: []
+            recordsTotal: 1,
+            recordsFiltered: 1,
+            data: [
+                {
+                    id: "001",
+                    alamat: "JL. Buki indah",
+                    kota: "Kab.Bandung",
+                    name: "Dimas Maryanto",
+                    provinsi: "Jawa Barat"
+                }
+            ]
         });
     }
-
-    data: Array<ExampleData> = [{
-        id: "001",
-        alamat: "JL. Buki indah",
-        kota: "Kab.Bandung",
-        name: "Dimas Maryanto",
-        provinsi: "Jawa Barat"
-    }];
 
     render() {
         return (
@@ -115,9 +115,7 @@ class Body extends Component {
                 <DataTablesComponent
                     id="example-table"
                     columns={this.columns}
-                    isServerSide={true}
                     ajaxData={this.ajaxConfig}
-                    data={this.data}
                     rowCallback={this.rowCallback}/>
             </div>
         );
