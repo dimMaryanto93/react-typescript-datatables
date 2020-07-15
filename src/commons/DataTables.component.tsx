@@ -6,12 +6,15 @@ import {Table} from "react-bootstrap";
 require('datatables.net-bs4/css/dataTables.bootstrap4.min.css');
 require('datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css');
 require('datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css');
+require('datatables.net-colreorder-bs4/css/colReorder.bootstrap4.min.css')
 
 require('datatables.net'); // eslint-disable-line no-unused-vars
 require('jszip/dist/jszip.min.js')
 require('datatables.net-responsive'); // eslint-disable-line no-unused-vars
 require('datatables.net-bs4/js/dataTables.bootstrap4.min.js')
 require('datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')
+require('datatables.net-colreorder/js/dataTables.colReorder.min.js')
+require('datatables.net-colreorder-bs4/js/colReorder.bootstrap4.min.js')
 require('datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'); // Column visibility
 require('datatables.net-buttons/js/buttons.colVis.min.js'); // Column visibility
 require('datatables.net-buttons/js/buttons.flash.min.js');  // Flash file export
@@ -45,6 +48,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
             jQueryUI: false,
             processing: true,
             serverSide: true,
+            colReorder: false,
             info: true,
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6 text-right'fB>>" +
                 "<'row'<'col-sm-12'tr>>" +
