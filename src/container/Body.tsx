@@ -79,9 +79,6 @@ class Body extends Component {
         let divButtonGroup = row.lastChild;
         let buttonGroups = divButtonGroup?.firstChild?.childNodes;
 
-        console.log('button group', buttonGroups?.item(index));
-
-        // item(indexOfElement)
         let buttonDetail = buttonGroups?.item(1);
         buttonDetail?.addEventListener('click', () => {
             console.log('button click', 'button detail', data);
