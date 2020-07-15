@@ -82,17 +82,17 @@ class Body extends Component {
         let buttonDetail = buttonGroups?.item(1);
         buttonDetail?.addEventListener('click', () => {
             console.log('button click', 'button detail', data);
-        });
+        }, false);
 
         let buttonEdit = buttonGroups?.item(3);
         buttonEdit?.addEventListener('click', () => {
             console.log('button click', 'button edit', data);
-        });
+        }, false);
 
         let buttonRemove = buttonGroups?.item(5);
         buttonRemove?.addEventListener('click', () => {
             console.log('button click', 'button remove', data);
-        });
+        }, false);
     }
 
     ajaxConfig: FunctionAjax = (data, callback) => {

@@ -1,14 +1,18 @@
 import React, {RefObject} from "react";
 import $ from 'jquery';
-import 'datatables.net-dt/css/jquery.dataTables.css'
-import 'datatables.net-buttons-dt/css/buttons.dataTables.css';
-import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
 import {ColumnSettings} from "./DataTables.interfaces";
 import {Table} from "react-bootstrap";
 
+require('datatables.net-bs4/css/dataTables.bootstrap4.min.css');
+require('datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css');
+require('datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css');
+
 require('datatables.net'); // eslint-disable-line no-unused-vars
-require('datatables.net-buttons'); // eslint-disable-line no-unused-vars
+require('jszip/dist/jszip.min.js')
 require('datatables.net-responsive'); // eslint-disable-line no-unused-vars
+require('datatables.net-bs4/js/dataTables.bootstrap4.min.js')
+require('datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')
+require('datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js'); // Column visibility
 require('datatables.net-buttons/js/buttons.colVis.min.js'); // Column visibility
 require('datatables.net-buttons/js/buttons.flash.min.js');  // Flash file export
 require('datatables.net-buttons/js/buttons.html5.min.js');  // HTML 5 file export
@@ -42,9 +46,14 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
             processing: true,
             serverSide: true,
             info: true,
-            dom: '<"top"i>rt<"bottom"flp><"clear">',
+            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6 text-right'fB>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
             columns: this.props.columns,
-            rowCallback: this.props.rowCallback
+            rowCallback: this.props.rowCallback,
+            buttons: [
+                'colvis', 'copy', 'excel', 'pdf', 'print'
+            ]
         });
 
         this.datatable.on('order.dt', function () {
@@ -68,12 +77,12 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
     render() {
         return (
             <Table id={this.props.id}
-                   bordered
+                   borderless
                    striped
                    hover
                    responsive
-                   className="display"
-                   size={"sm"}
+                   className="container"
+                   size={"md"}
                    style={this.style}>
             </Table>
         );
