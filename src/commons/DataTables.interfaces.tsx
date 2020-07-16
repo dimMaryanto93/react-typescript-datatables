@@ -25,6 +25,25 @@ export interface AjaxSettings extends JQueryAjaxSettings {
     dataSrc?: string | ((data: any) => any[]);
 }
 
+export interface AjaxDataRequest {
+    draw: number;
+    start: number;
+    length: number;
+    order: Array<AjaxDataRequestOrder>;
+}
+
+export interface AjaxDataResponse<T> {
+    draw: number;
+    data: Array<T>;
+    recordsFiltered: number;
+    recordsTotal: number;
+}
+
+export interface AjaxDataRequestOrder {
+    column: number;
+    dir: string;
+}
+
 export interface ColumnSetting<T> {
     /**
      * Class to assign to each cell in the column. Since: 1.10
