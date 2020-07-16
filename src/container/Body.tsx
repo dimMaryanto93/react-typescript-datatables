@@ -1,4 +1,4 @@
-import React, {FormEvent} from 'react';
+import React, {createRef, FormEvent} from 'react';
 import 'font-awesome/css/font-awesome.min.css'
 import {FunctionAjax, FunctionRowCallback} from "../commons/DataTables.types";
 import {ColumnSetting} from "../commons/DataTables.interfaces";
@@ -14,6 +14,8 @@ interface ExampleData {
 }
 
 const HalamanUtama = () => {
+
+    const datatablesRef = createRef<DataTablesComponent<ExampleData>>();
 
     const columns: ColumnSetting<ExampleData>[] = [
         {
@@ -129,7 +131,7 @@ const HalamanUtama = () => {
     }
 
     function handleOnSubmit(event: FormEvent) {
-        console.log('form submit');
+        datatablesRef.current?.reloadData();
         event.preventDefault();
     }
 
@@ -156,7 +158,8 @@ const HalamanUtama = () => {
                     id={'datatables-01'}
                     columns={columns}
                     ajaxData={ajaxConfig}
-                    rowCallback={rowCallback}/>
+                    rowCallback={rowCallback}
+                    ref={datatablesRef}/>
             </div>
         </div>
     );

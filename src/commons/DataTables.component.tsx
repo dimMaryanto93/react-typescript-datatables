@@ -1,4 +1,4 @@
-import React, {RefObject} from "react";
+import React from "react";
 import $ from 'jquery';
 import {ColumnSettings} from "./DataTables.interfaces";
 import {Table} from "react-bootstrap";
@@ -24,12 +24,6 @@ require('datatables.net-buttons/js/buttons.print.min.js');  // Print view button
 class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
 
     private datatable: any;
-    private dataTablesRef: RefObject<any>;
-
-    constructor(props: ColumnSettings<T>) {
-        super(props);
-        this.dataTablesRef = React.createRef();
-    }
 
     componentDidMount() {
         this.datatable = $(`#${this.props.id}`).DataTable({
