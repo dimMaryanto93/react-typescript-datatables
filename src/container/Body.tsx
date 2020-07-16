@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {FormEvent} from 'react';
 import 'font-awesome/css/font-awesome.min.css'
 import {FunctionAjax, FunctionRowCallback} from "../commons/DataTables.types";
 import {ColumnSetting} from "../commons/DataTables.interfaces";
 import DataTablesComponent from "../commons/DataTables.component";
+import {Button, FormControl, InputGroup} from "react-bootstrap";
 
 interface ExampleData {
     id: string,
@@ -127,15 +128,36 @@ const HalamanUtama = () => {
         });
     }
 
+    function handleOnSubmit(event: FormEvent) {
+        console.log('form submit');
+        event.preventDefault();
+    }
 
     return (
         <div>
-            <DataTablesComponent
-                key={"test01"}
-                id={'datatables-01'}
-                columns={columns}
-                ajaxData={ajaxConfig}
-                rowCallback={rowCallback}/>
+            <form onSubmit={handleOnSubmit}>
+                <InputGroup className="mb-3">
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl
+                        placeholder="Username"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                    />
+                </InputGroup>
+                <InputGroup>
+                    <Button variant="primary" type={"submit"}>Search</Button>
+                </InputGroup>
+            </form>
+            <div>
+                <DataTablesComponent
+                    key={"test01"}
+                    id={'datatables-01'}
+                    columns={columns}
+                    ajaxData={ajaxConfig}
+                    rowCallback={rowCallback}/>
+            </div>
         </div>
     );
 }
