@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import 'font-awesome/css/font-awesome.min.css'
 import {FunctionAjax, FunctionRowCallback} from "../commons/DataTables.types";
 import {ColumnSetting} from "../commons/DataTables.interfaces";
@@ -12,9 +12,9 @@ interface ExampleData {
     alamat: string
 }
 
-class Body extends Component {
+const HalamanUtama = () => {
 
-    columns: ColumnSetting<ExampleData>[] = [
+    const columns: ColumnSetting<ExampleData>[] = [
         {
             className: "text-center",
             searchable: false,
@@ -75,7 +75,7 @@ class Body extends Component {
         }
     ]
 
-    rowCallback: FunctionRowCallback<ExampleData> = (row, data: ExampleData, index) => {
+    const rowCallback: FunctionRowCallback<ExampleData> = (row, data: ExampleData, index) => {
         let divButtonGroup = row.lastChild;
         let buttonGroups = divButtonGroup?.firstChild?.childNodes;
 
@@ -95,7 +95,7 @@ class Body extends Component {
         }, false);
     }
 
-    ajaxConfig: FunctionAjax = (data, callback) => {
+    const ajaxConfig: FunctionAjax = (data, callback) => {
         console.log('data: ', data);
         callback({
             recordsTotal: 10,
@@ -127,18 +127,17 @@ class Body extends Component {
         });
     }
 
-    render() {
-        return (
-            <div>
-                <DataTablesComponent
-                    key={"test01"}
-                    id={'datatables-01'}
-                    columns={this.columns}
-                    ajaxData={this.ajaxConfig}
-                    rowCallback={this.rowCallback}/>
-            </div>
-        );
-    }
+
+    return (
+        <div>
+            <DataTablesComponent
+                key={"test01"}
+                id={'datatables-01'}
+                columns={columns}
+                ajaxData={ajaxConfig}
+                rowCallback={rowCallback}/>
+        </div>
+    );
 }
 
-export default Body;
+export default HalamanUtama;

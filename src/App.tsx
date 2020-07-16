@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Body from './container/Body'
+import HalamanUtama from "./container/Body";
 
 function App() {
     return (
         <div className="container">
-            <Body/>
+            <HalamanUtama/>
 
             <footer>
                 version: {process.env.REACT_APP_VERSION} @Copyright 2020
