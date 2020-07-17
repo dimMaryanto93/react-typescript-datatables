@@ -6,6 +6,7 @@ import {datatables as datatablesService} from "../services/example-table.service
 import {Button, FormControl, InputGroup} from "react-bootstrap";
 import {FunctionRowCallback} from "../commons/DataTables.types";
 import 'font-awesome/css/font-awesome.min.css'
+import $ from 'jquery'
 
 class ServerSideDataTablesPages extends Component {
 
@@ -121,6 +122,9 @@ class ServerSideDataTablesPages extends Component {
     }
 
     rowCallback: FunctionRowCallback<ExampleData> = (row, data, index) => {
+        let numberOfRows = this.datatables.current?.getNumberOfRow(index);
+        $('td:eq(0)', row).html(String(numberOfRows));
+
     }
 
     handleOnSubmit = (event: FormEvent) => {

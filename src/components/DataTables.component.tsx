@@ -30,7 +30,13 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
             language: {
                 lengthMenu: "Menampilkan _MENU_ data per halaman",
                 info: "Halaman _PAGE_ dari _PAGES_",
-                infoEmpty: ""
+                infoEmpty: "",
+                paginate: {
+                    previous: "<",
+                    next: ">",
+                    first: "<<",
+                    last: ">>"
+                }
             },
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             scrollX: true,
@@ -55,6 +61,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
             ]
         });
 
+
         this.datatable.on('order.dt', function () {
         });
 
@@ -71,6 +78,14 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
 
     reloadData = () => {
         this.datatable.ajax.reload();
+    }
+
+    getNumberOfRow = (numberPageIndex: number) => {
+        const info = this.datatable.page.info();
+        const page = info.page;
+        const length = info.length;
+        const index = (page * length + (numberPageIndex + 1));
+        return index;
     }
 
     style = {
