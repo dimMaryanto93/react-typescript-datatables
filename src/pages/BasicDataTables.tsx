@@ -1,8 +1,7 @@
 import React, {Component, FormEvent} from "react";
 import {Button, FormControl, InputGroup, Table} from "react-bootstrap";
-import Axios from "axios";
 import $ from 'jquery';
-import {AjaxDataResponse} from "../commons/DataTables.interfaces";
+import {datatables as datatablesService} from "../services/example-table.service";
 
 require('datatables.net-bs4/css/dataTables.bootstrap4.min.css');
 require('datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css');
@@ -22,18 +21,6 @@ require('datatables.net-buttons/js/buttons.colVis.min.js'); // Column visibility
 require('datatables.net-buttons/js/buttons.flash.min.js');  // Flash file export
 require('datatables.net-buttons/js/buttons.html5.min.js');  // HTML 5 file export
 require('datatables.net-buttons/js/buttons.print.min.js');  // Print view button
-
-interface ExampleData {
-    "active": boolean | null,
-    "counter": number | null,
-    "createdDate": Date | null,
-    "createdTime": Date | null,
-    "currency": Number | null,
-    "description": String | null,
-    "floating": Number | null,
-    "id": String | null,
-    "name": String | null
-}
 
 class BasicDataTables extends Component {
 
@@ -70,16 +57,9 @@ class BasicDataTables extends Component {
             paging: true,
             searching: false,
             pagingType: "full_numbers",
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             ajax: (data: any, callback) => {
-                const params = new URLSearchParams();
-                params.append('start', data.start);
-                params.append('length', data.length);
-                params.append('draw', data.draw);
-                params.append('order[0][column]', data.order[0]['column']);
-                params.append('order[0][dir]', data.order[0]['dir']);
-
-                Axios.post<AjaxDataResponse<ExampleData>>(`/example/api/example/datatables`,
-                    this.state.formValue, {params: params})
+                datatablesService(this.state.formValue, data)
                     .then(response => {
                         console.log('response http: ', response.data);
                         let body = response.data;

@@ -32,6 +32,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
                 info: "Halaman _PAGE_ dari _PAGES_",
                 infoEmpty: ""
             },
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             scrollX: true,
             order: [1, 'asc'],
             responsive: true,
@@ -69,7 +70,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
     }
 
     reloadData = () => {
-        this.datatable.reloadData();
+        this.datatable.ajax.reloadData();
     }
 
     style = {
