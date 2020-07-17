@@ -74,10 +74,10 @@ class ServerSideDataTablesPages extends Component {
                             <button class="btn btn-info" type="button" id="buttonDetail">
                                 <i class="fa fa-binoculars"></i>
                             </button>  
-                            <button class="btn btn-warning" type="button" id="buttonDetail">
+                            <button class="btn btn-warning" type="button" id="buttonEdit">
                                 <i class="fa fa-pencil"></i>
                             </button>
-                            <button class="btn btn-danger" type="button" id="buttonDetail">
+                            <button class="btn btn-danger" type="button" id="buttonRemove">
                                 <i class="fa fa-trash"></i>
                             </button>     
                         </div>`;
@@ -123,8 +123,20 @@ class ServerSideDataTablesPages extends Component {
 
     rowCallback: FunctionRowCallback<ExampleData> = (row, data, index) => {
         let numberOfRows = this.datatables.current?.getNumberOfRow(index);
+        // TODO set first column as number of rows
         $('td:eq(0)', row).html(String(numberOfRows));
 
+        $('#buttonDetail', row).on('click', () => {
+            console.log('info button detail click', data);
+        });
+
+        $('#buttonEdit', row).on('click', () => {
+            console.log('info button edit click', data);
+        });
+
+        $('#buttonRemove', row).on('click', () => {
+            console.log('info button remove click', data);
+        });
     }
 
     handleOnSubmit = (event: FormEvent) => {
@@ -132,11 +144,21 @@ class ServerSideDataTablesPages extends Component {
         this.datatables.current?.reloadData();
     }
 
+    handleOnReset = (event: FormEvent) => {
+        event.preventDefault();
+        this.setState({
+            formValue: {
+                name: ""
+            }
+        });
+        this.datatables.current?.reloadData();
+    }
+
     render() {
         return (
             <div>
                 <div>
-                    <form onSubmit={this.handleOnSubmit}>
+                    <form onSubmit={this.handleOnSubmit} onReset={this.handleOnReset}>
                         <InputGroup className="mb-3">
                             <InputGroup.Prepend>
                                 <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
@@ -146,6 +168,7 @@ class ServerSideDataTablesPages extends Component {
                                 placeholder="Username"
                                 aria-label="Username"
                                 aria-describedby="basic-addon1"
+                                value={this.state.formValue.name}
                                 onChange={event => {
                                     this.setState({formValue: {name: event.target.value}})
                                 }}
@@ -153,6 +176,7 @@ class ServerSideDataTablesPages extends Component {
                         </InputGroup>
                         <InputGroup>
                             <Button variant="primary" type={"submit"}>Search</Button>
+                            <Button variant="secondary" type={"reset"}>Reset</Button>
                         </InputGroup>
                     </form>
                 </div>
