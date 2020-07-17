@@ -8,6 +8,7 @@ require('datatables.net-bs4/css/dataTables.bootstrap4.min.css');
 require('datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css');
 require('datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css');
 require('datatables.net-colreorder-bs4/css/colReorder.bootstrap4.min.css')
+require('font-awesome/css/font-awesome.min.css')
 
 require('datatables.net'); // eslint-disable-line no-unused-vars
 require('jszip/dist/jszip.min.js')
@@ -54,6 +55,7 @@ class BasicDataTables extends Component {
 
     componentWillUnmount() {
         this.datatables.destroy();
+        console.log('component destroy')
     }
 
     componentDidMount() {
@@ -183,7 +185,6 @@ class BasicDataTables extends Component {
         });
     }
 
-
     handleOnSubmit = (event: FormEvent) => {
         console.log('info form', this.state.formValue)
         this.datatables.ajax.reload();
@@ -208,7 +209,7 @@ class BasicDataTables extends Component {
                             aria-label="Username"
                             aria-describedby="basic-addon1"
                             onChange={event => {
-                                this.state.formValue.name = event.target.value
+                                this.setState({formValue: {name: event.target.value}})
                             }}
                         />
                     </InputGroup>
