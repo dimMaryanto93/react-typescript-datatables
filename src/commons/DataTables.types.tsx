@@ -8,3 +8,4 @@ export type FunctionRowCallback<T> =
     (row: Node, data: Array<T> | T | any, index: number) => void;
 export type FunctionHeaderCallback<T> =
     (thead: Node, data: Array<T>[], start: number, end: number, display: any[]) => void;
+

@@ -180,13 +180,15 @@ class BasicDataTables extends Component {
             rowCallback: (row, data, index) => {
             },
             buttons: [
+                /**
+                 * button excel still not work
+                 */
                 'colvis', 'copy', 'excel', 'pdf', 'print'
             ]
         });
     }
 
     handleOnSubmit = (event: FormEvent) => {
-        console.log('info form', this.state.formValue)
         this.datatables.ajax.reload();
         event.preventDefault();
     }
