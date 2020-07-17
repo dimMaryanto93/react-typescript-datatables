@@ -22,7 +22,7 @@ require('datatables.net-buttons/js/buttons.flash.min.js');  // Flash file export
 require('datatables.net-buttons/js/buttons.html5.min.js');  // HTML 5 file export
 require('datatables.net-buttons/js/buttons.print.min.js');  // Print view button
 
-class BasicDataTables extends Component {
+class BasicDataTablesPages extends Component {
 
     state = {
         formValue: {
@@ -216,4 +216,4 @@ class BasicDataTables extends Component {
 }
 
 
-export default BasicDataTables;
+export default BasicDataTablesPages;

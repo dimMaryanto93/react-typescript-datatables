@@ -1,17 +1,15 @@
 import React from 'react';
-import BasicDataTables from "../pages/BasicDataTables";
+import BasicDataTablesPages from "../pages/BasicDataTables.pages";
+import ServerSideDataTablesPages from "../pages/ServerSideDataTables.pages";
 
 const HalamanUtama = () => {
 
     return (
         <div>
-            <div>
-                <h3>Single Component</h3>
-                <BasicDataTables/>
-            </div>
             <hr/>
             <div>
                 <h3>as a Libraries</h3>
+                <ServerSideDataTablesPages/>
             </div>
 
         </div>

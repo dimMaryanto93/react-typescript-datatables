@@ -70,7 +70,7 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
     }
 
     reloadData = () => {
-        this.datatable.ajax.reloadData();
+        this.datatable.ajax.reload();
     }
 
     style = {
