@@ -3,7 +3,7 @@ import DataTablesComponent from "../components/DataTables.component";
 import {ColumnSetting} from "../commons/DataTables.interfaces";
 import {ExampleData} from "../models/example-data.model";
 import {datatables as datatablesService} from "../services/example-table.service";
-import {Button, FormControl, InputGroup} from "react-bootstrap";
+import {Button, ButtonGroup, FormControl, InputGroup} from "react-bootstrap";
 import {FunctionRowCallback} from "../commons/DataTables.types";
 import 'font-awesome/css/font-awesome.min.css'
 import $ from 'jquery'
@@ -174,12 +174,13 @@ class ServerSideDataTablesPages extends Component {
                                 }}
                             />
                         </InputGroup>
-                        <InputGroup>
+                        <ButtonGroup aria-label="Datatables Handler">
                             <Button variant="primary" type={"submit"}>Search</Button>
                             <Button variant="secondary" type={"reset"}>Reset</Button>
-                        </InputGroup>
+                        </ButtonGroup>
                     </form>
                 </div>
+                <br/>
                 <div>
                     <DataTablesComponent
                         ref={this.datatables}

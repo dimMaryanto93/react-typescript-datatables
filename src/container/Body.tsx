@@ -8,7 +8,12 @@ const HalamanUtama = () => {
         <div>
             <hr/>
             <div>
-                <h3>as a Libraries</h3>
+                <h3>Basic Datatables</h3>
+                <BasicDataTablesPages/>
+            </div>
+            <hr/>
+            <div>
+                <h3>Datatables Parent Child</h3>
                 <ServerSideDataTablesPages/>
             </div>
 

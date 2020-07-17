@@ -1,7 +1,6 @@
-import React, {Component, FormEvent} from "react";
-import {Button, FormControl, InputGroup, Table} from "react-bootstrap";
+import React, {Component} from "react";
+import {Table} from "react-bootstrap";
 import $ from 'jquery';
-import {datatables as datatablesService} from "../services/example-table.service";
 
 require('datatables.net-bs4/css/dataTables.bootstrap4.min.css');
 require('datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css');
@@ -24,20 +23,6 @@ require('datatables.net-buttons/js/buttons.print.min.js');  // Print view button
 
 class BasicDataTablesPages extends Component {
 
-    state = {
-        formValue: {
-            name: '',
-            counter: 0,
-            createdDate: null,
-            createdTime: null,
-            currency: null,
-            floating: null,
-            id: '',
-            active: null,
-            description: ''
-        }
-    }
-
     datatables: any;
 
     componentWillUnmount() {
@@ -58,28 +43,9 @@ class BasicDataTablesPages extends Component {
             searching: false,
             pagingType: "full_numbers",
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            ajax: (data: any, callback) => {
-                datatablesService(this.state.formValue, data)
-                    .then(response => {
-                        console.log('response http: ', response.data);
-                        let body = response.data;
-                        callback({
-                            recordsTotal: body.recordsTotal,
-                            recordsFiltered: body.recordsFiltered,
-                            data: body.data
-                        });
-                    })
-                    .catch(error => {
-                        callback({
-                            recordsTotal: 0,
-                            recordsFiltered: 0,
-                            data: []
-                        });
-                    });
-            },
             jQueryUI: false,
             processing: true,
-            serverSide: true,
+            serverSide: false,
             colReorder: false,
             info: true,
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6 text-right'fB>>" +
@@ -158,19 +124,8 @@ class BasicDataTablesPages extends Component {
                 }
             ],
             rowCallback: (row, data, index) => {
-            },
-            buttons: [
-                /**
-                 * button excel still not work
-                 */
-                'colvis', 'copy', 'excel', 'pdf', 'print'
-            ]
+            }
         });
-    }
-
-    handleOnSubmit = (event: FormEvent) => {
-        this.datatables.ajax.reload();
-        event.preventDefault();
     }
 
     style = {
@@ -180,25 +135,6 @@ class BasicDataTablesPages extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleOnSubmit}>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Prepend>
-                            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <FormControl
-                            type={"text"}
-                            placeholder="Username"
-                            aria-label="Username"
-                            aria-describedby="basic-addon1"
-                            onChange={event => {
-                                this.setState({formValue: {name: event.target.value}})
-                            }}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <Button variant="primary" type={"submit"}>Search</Button>
-                    </InputGroup>
-                </form>
                 <div>
                     <Table id={"datatables"}
                            borderless
