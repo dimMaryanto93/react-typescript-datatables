@@ -1,6 +1,6 @@
 import React from "react";
 import $ from 'jquery';
-import {ColumnSettings} from "./DataTables.interfaces";
+import {ColumnSettings} from "../commons/DataTables.interfaces";
 import {Table} from "react-bootstrap";
 
 require('datatables.net-bs4/css/dataTables.bootstrap4.min.css');
@@ -62,6 +62,10 @@ class DataTablesComponent<T> extends React.Component<ColumnSettings<T>, {}> {
 
         this.datatable.on('length.dt', function (e: any, settings: any, len: number) {
         });
+    }
+
+    componentWillUnmount() {
+        this.datatable.destroy();
     }
 
     reloadData = () => {
