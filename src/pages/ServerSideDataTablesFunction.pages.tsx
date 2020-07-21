@@ -1,5 +1,4 @@
-import React, {Component, createRef, FormEvent} from "react";
-import DataTablesComponent from "../components/DataTables.component";
+import React, {FormEvent, useRef, useState} from "react";
 import {ColumnSetting} from "../commons/DataTables.interfaces";
 import {ExampleData} from "../models/example-data.model";
 import {datatables as datatablesService} from "../services/example-table.service";
@@ -7,12 +6,23 @@ import {Button, ButtonGroup, FormControl, InputGroup} from "react-bootstrap";
 import {FunctionRowCallback} from "../commons/DataTables.types";
 import 'font-awesome/css/font-awesome.min.css'
 import $ from 'jquery'
+import DataTablesFunctionComponent from "../components/DataTables.function";
 
-class ServerSideDataTablesPages extends Component {
+const FunctionServerSideDataTablesPages = () => {
 
-    datatables = createRef<DataTablesComponent<ExampleData>>()
+    const [formValue, setFormValue] = useState({
+        name: '',
+        counter: 0,
+        createdDate: null,
+        createdTime: null,
+        currency: null,
+        floating: null,
+        id: '',
+        active: null,
+        description: ''
+    });
 
-    columns: Array<ColumnSetting<ExampleData>> = [
+    const columns: Array<ColumnSetting<ExampleData>> = [
         {
             className: "text-center",
             searchable: false,
@@ -85,9 +95,9 @@ class ServerSideDataTablesPages extends Component {
         }
     ]
 
-    ajaxConfig = (data: any, callback: any) => {
-        console.log('info data', this.state.formValue, data)
-        datatablesService(this.state.formValue, data)
+    const ajaxConfig = (data: any, callback: any) => {
+        console.log('info data', formValue, data)
+        datatablesService(formValue, data)
             .then(response => {
                 console.log('response http: ', response.data);
                 let body = response.data;
@@ -106,25 +116,10 @@ class ServerSideDataTablesPages extends Component {
             });
     }
 
-
-    state = {
-        formValue: {
-            name: '',
-            counter: 0,
-            createdDate: null,
-            createdTime: null,
-            currency: null,
-            floating: null,
-            id: '',
-            active: null,
-            description: ''
-        }
-    }
-
-    rowCallback: FunctionRowCallback<ExampleData> = (row, data, index) => {
-        let numberOfRows = this.datatables.current?.getNumberOfRow(index);
+    const rowCallback: FunctionRowCallback<ExampleData> = (row, data, index) => {
+        // let numberOfRows = datatables.current?.getNumberOfRow(index);
         // TODO set first column as number of rows
-        $('td:eq(0)', row).html(String(numberOfRows));
+        // $('td:eq(0)', row).html(String(numberOfRows));
 
         $('#buttonDetail', row).on('click', () => {
             console.log('info button detail click', data);
@@ -139,59 +134,70 @@ class ServerSideDataTablesPages extends Component {
         });
     }
 
-    handleOnSubmit = (event: FormEvent) => {
+    const handleOnSubmit = (event: FormEvent) => {
         event.preventDefault();
-        this.datatables.current?.reloadData();
+        // dtRef.current?.reloadData();
     }
 
-    handleOnReset = (event: FormEvent) => {
+    const handleOnReset = (event: FormEvent) => {
         event.preventDefault();
-        this.setState({
-            formValue: {
-                name: ""
-            }
-        });
-        this.datatables.current?.reloadData();
+        setFormValue({
+            id: '',
+            name: '',
+            counter: 0,
+            createdDate: null,
+            createdTime: null,
+            currency: null,
+            floating: null,
+            active: null,
+            description: ''
+        })
+        // datatables.current?.reloadData();
     }
 
-    render() {
-        return (
+    let datatableRef = useRef();
+
+    return (
+        <div>
             <div>
-                <div>
-                    <form onSubmit={this.handleOnSubmit} onReset={this.handleOnReset}>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Prepend>
-                                <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-                            </InputGroup.Prepend>
-                            <FormControl
-                                type={"text"}
-                                placeholder="Username"
-                                aria-label="Username"
-                                aria-describedby="basic-addon1"
-                                value={this.state.formValue.name}
-                                onChange={event => {
-                                    this.setState({formValue: {name: event.target.value}})
-                                }}
-                            />
-                        </InputGroup>
-                        <ButtonGroup aria-label="Datatables Handler">
-                            <Button variant="primary" type={"submit"}>Search</Button>
-                            <Button variant="secondary" type={"reset"}>Reset</Button>
-                        </ButtonGroup>
-                    </form>
-                </div>
-                <br/>
-                <div>
-                    <DataTablesComponent
-                        ref={this.datatables}
-                        id={'datatables-class-base'}
-                        columns={this.columns}
-                        rowCallback={this.rowCallback}
-                        ajaxData={this.ajaxConfig}/>
-                </div>
+                <form onSubmit={handleOnSubmit} onReset={handleOnReset}>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl
+                            type={"text"}
+                            placeholder="Username"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            value={formValue.name}
+                            onChange={event => {
+                                setFormValue({
+                                        ...formValue,
+                                        name: event.target.value
+                                    }
+                                )
+                            }}
+                        />
+                    </InputGroup>
+                    <ButtonGroup aria-label="Datatables Handler">
+                        <Button variant="primary" type={"submit"}>Search</Button>
+                        <Button variant="secondary" type={"reset"}>Reset</Button>
+                    </ButtonGroup>
+                </form>
             </div>
-        );
-    }
+            <br/>
+            <div>
+                <DataTablesFunctionComponent
+                    // ref={datatableRef}
+                    id={'datatables-function-base'}
+                    columns={columns}
+                    rowCallback={rowCallback}
+                    ajaxData={ajaxConfig}/>
+            </div>
+        </div>
+    )
+
 }
 
-export default ServerSideDataTablesPages;
+export default FunctionServerSideDataTablesPages;
